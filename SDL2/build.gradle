@@ -9,12 +9,15 @@ android {
         targetSdkVersion 32
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             // abiFilters "armeabi-v7a"
             abiFilters "x86", "armeabi-v7a", "arm64-v8a"
 
+        }
+        externalNativeBuild {
+            cmake {
+                arguments "-DFETCHCONTENT_QUIET=OFF"
+            }
         }
     }
     buildTypes {
@@ -24,8 +27,8 @@ android {
         }
     }
     externalNativeBuild {
-        ndkBuild {
-            path './source/Android.mk'
+        cmake {
+            path 'CMakeLists.txt'
         }
     }
 }

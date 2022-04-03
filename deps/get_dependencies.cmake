@@ -10,23 +10,28 @@ FetchContent_Populate(
 )
 
 FetchContent_Populate(
-        SDL2
-        URL https://www.libsdl.org/release/SDL2-2.0.20.tar.gz
-        URL_MD5 a53acc02e1cca98c4123229069b67c9e
-        SOURCE_DIR "${SRC_DIR}/SDL2/source/sdl"
+        freetype
+        GIT_REPOSITORY https://github.com/freetype/freetype.git
+        SOURCE_DIR "${SRC_DIR}/SDL2/source/freetype"
+)
 
+FetchContent_Populate(
+        SDL2
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
+        GIT_TAG main
+        SOURCE_DIR "${SRC_DIR}/SDL2/source/sdl"
 )
 FetchContent_Populate(
-       SDL_image
-       URL https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz
-       URL_MD5 f26f3a153360a8f09ed5220ef7b07aea
-       SOURCE_DIR "${SRC_DIR}/SDL2/source/sdl_image"
+        SDL_image
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL_image.git
+        GIT_TAG main
+        SOURCE_DIR "${SRC_DIR}/SDL2/source/sdl_image"
 )
 FetchContent_Populate(
-       SDL2_ttf
-       URL https://github.com/libsdl-org/SDL_ttf/releases/download/release-2.0.18/SDL2_ttf-2.0.18.tar.gz
-       URL_MD5 86d3023ad3fab597203022f856cff103
-       SOURCE_DIR "${SRC_DIR}/SDL2/source/sdl_ttf"
+        SDL2_ttf
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf.git
+        GIT_TAG main
+        SOURCE_DIR "${SRC_DIR}/SDL2/source/sdl_ttf"
 )
 
 FetchContent_Populate(
