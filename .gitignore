@@ -11,4 +11,4 @@ deps/*
 !deps/get_dependencies.cmake
 /*/source/
 !SDL2/source/Android.mk
-Cytopia/.cxx/
+/*/.cxx/
