@@ -48,15 +48,15 @@ FetchContent_Populate(
 )
 
 FetchContent_Populate(
-       ogg
+       libogg
        GIT_REPOSITORY https://github.com/xiph/ogg.git
-       SOURCE_DIR "${SRC_DIR}/ogg/source"
+       SOURCE_DIR "${SRC_DIR}/libogg/source"
 )
 
 FetchContent_Populate(
-       vorbis
+       libvorbis
        GIT_REPOSITORY https://github.com/xiph/vorbis.git
-       SOURCE_DIR "${SRC_DIR}/vorbis/source"
+       SOURCE_DIR "${SRC_DIR}/libvorbis/source"
 )
 
 FetchContent_Populate(

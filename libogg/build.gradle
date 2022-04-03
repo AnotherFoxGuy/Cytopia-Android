@@ -10,17 +10,14 @@ android {
         versionCode 1
         versionName "1.0"
 
-
-    externalNativeBuild {
-        cmake {
-            version "3.10.2"
-            
-            arguments "-DBUILD_SHARED_LIBS=ON"
-    }
-    }
+        externalNativeBuild {
+            cmake {
+                arguments "-DBUILD_SHARED_LIBS=ON"
+            }
+        }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-	ndk {
+        ndk {
             // abiFilters "armeabi-v7a"
             abiFilters "x86", "armeabi-v7a", "arm64-v8a"
 
@@ -32,13 +29,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    
+
     externalNativeBuild {
         cmake {
-            version "3.10.2"
-            
             path './source/CMakeLists.txt'
-
             // Using one top level build dir for all build related files to reduce clutter.
             buildStagingDirectory file("${buildDir}/.externalNativeBuild/${project.name}")
         }
@@ -46,7 +40,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     //     exclude group: 'com.android.support', module: 'support-annotations'
     // })
