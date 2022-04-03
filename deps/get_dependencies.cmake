@@ -12,21 +12,21 @@ FetchContent_Populate(
 FetchContent_Populate(
         SDL2
         URL https://www.libsdl.org/release/SDL2-2.0.20.tar.gz
-        #URL_MD5 aad0327fad5a183aaeb9ae4b9bd97ef0
-        SOURCE_DIR "${SRC_DIR}/SDL2/sdl-source"
+        URL_MD5 a53acc02e1cca98c4123229069b67c9e
+        SOURCE_DIR "${SRC_DIR}/SDL2/source/sdl"
 
 )
 FetchContent_Populate(
        SDL_image
        URL https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz
-       #URL_MD5 aad0327fad5a183aaeb9ae4b9bd97ef0
-       SOURCE_DIR "${SRC_DIR}/SDL2/SDL_image-source"
+       URL_MD5 f26f3a153360a8f09ed5220ef7b07aea
+       SOURCE_DIR "${SRC_DIR}/SDL2/source/sdl_image"
 )
 FetchContent_Populate(
        SDL2_ttf
-       URL https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-2.0.15.tar.gz
-       #URL_MD5 aad0327fad5a183aaeb9ae4b9bd97ef0
-       SOURCE_DIR "${SRC_DIR}/SDL2/SDL2_ttf-source"
+       URL https://github.com/libsdl-org/SDL_ttf/releases/download/release-2.0.18/SDL2_ttf-2.0.18.tar.gz
+       URL_MD5 86d3023ad3fab597203022f856cff103
+       SOURCE_DIR "${SRC_DIR}/SDL2/source/sdl_ttf"
 )
 
 FetchContent_Populate(
@@ -37,13 +37,13 @@ FetchContent_Populate(
 FetchContent_Populate(
        zlib
        URL https://www.zlib.net/zlib-1.2.12.tar.gz
-       #URL_MD5 aad0327fad5a183aaeb9ae4b9bd97ef0
+       URL_MD5 5fc414a9726be31427b440b434d05f78
        SOURCE_DIR "${SRC_DIR}/zlib/source"
 )
 FetchContent_Populate(
        openal-soft
        URL https://github.com/kcat/openal-soft/archive/openal-soft-1.20.1.tar.gz
-       #URL_MD5 aad0327fad5a183aaeb9ae4b9bd97ef0
+       URL_MD5 9431604d354437b12032c352203c2abb
        SOURCE_DIR "${SRC_DIR}/openal-soft/source"
 )
 
@@ -62,6 +62,6 @@ FetchContent_Populate(
 FetchContent_Populate(
        libpng
        URL https://nchc.dl.sourceforge.net/project/libpng/libpng16/1.6.37/libpng-1.6.37.tar.xz
-       #URL_MD5 aad0327fad5a183aaeb9ae4b9bd97ef0
+       URL_MD5 015e8e15db1eecde5f2eb9eb5b6e59e9
        SOURCE_DIR "${SRC_DIR}/libpng/source"
 )
