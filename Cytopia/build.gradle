@@ -14,12 +14,7 @@ android {
 
         externalNativeBuild {
             cmake {
-                arguments "-DCYTOPIA_LIB_PREFERENCE=CONAN",
-                        //"-DCYTOPIA_FORCE_SYSTEM_DEPENDENCIES=ON",
-                        "-DENABLE_ANGELSCRIPT=OFF",
-                        "-DBUILD_TEST=OFF",
-                        "-DENABLE_AUDIO=ON"
-                        //"-DBUILD_ANDROID=ON"
+                arguments "-DBUILD_ANDROID=ON", "-DCYTOPIA_LIB_PREFERENCE=SYSTEM", "-DCYTOPIA_FORCE_SYSTEM_DEPENDENCIES=ON", "-DENABLE_ANGELSCRIPT=OFF", "-DBUILD_TEST=OFF", "-DENABLE_AUDIO=OFF"
             }
         }
 
@@ -44,7 +39,7 @@ android {
     }
     externalNativeBuild {
         cmake {
-            path "./source/CMakeLists.txt"
+            path "./CMakeLists.txt"
         }
     }
 }
