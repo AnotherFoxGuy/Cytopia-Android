@@ -31,7 +31,7 @@ android {
 
     sourceSets {
         main {
-            assets.srcDirs = ['../../../data']
+            assets.srcDirs = ['./source/data']
         }
     }
     buildTypes {
@@ -43,9 +43,9 @@ android {
     externalNativeBuild {
         cmake {
             version "3.10.2"
-            path "../../../CMakeLists.txt"
+            path "./source/CMakeLists.txt"
             // Using one top level build dir for all build related files to reduce clutter.
-            buildStagingDirectory file("${buildDir}/../.externalNativeBuild/${project.name}")
+            buildStagingDirectory file("${buildDir}/.externalNativeBuild/${project.name}")
         }
     }
 }

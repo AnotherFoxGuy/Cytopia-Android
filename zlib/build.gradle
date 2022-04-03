@@ -30,7 +30,7 @@ android {
         externalNativeBuild {
         ndkBuild {
 
-            path '../../../external/android/other/zlib/Makefile'
+            path './source/Makefile'
 
         }
       }
