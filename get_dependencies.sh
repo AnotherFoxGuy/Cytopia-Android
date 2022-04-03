@@ -1,0 +1,1 @@
+cmake -P get_dependencies.cmake
