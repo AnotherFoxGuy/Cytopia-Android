@@ -50,13 +50,6 @@ add_android_lib(SDL::TTF SDL2 libSDL2_ttf.so "${CMAKE_SOURCE_DIR}/../SDL2/source
 # libnoise
 # build/libnoise/intermediates/cmake/release/obj/x86/libnoise.so
 add_android_lib(LibNoise::LibNoise libnoise libnoise.so "${CMAKE_SOURCE_DIR}/../libnoise/source/src/noise")
-
-# openal
-add_android_lib(OPENAL openal-soft libopenal.so "${CMAKE_SOURCE_DIR}/../openal-soft/source/include")
-
-# ogg
-add_android_lib(LIBOGG libogg libogg.so "${CMAKE_SOURCE_DIR}/../source/sdl/include")
-
 # zlib
 # build/zlib/intermediates/cmake/release/obj/x86/libz.so
 add_android_lib(ZLIB::ZLIB zlib libz.so "${CMAKE_SOURCE_DIR}/../zlib/source")
@@ -74,10 +67,16 @@ add_library(LIBPNG::LIBPNG INTERFACE IMPORTED GLOBAL)
 target_include_directories(LIBPNG::LIBPNG INTERFACE "${CMAKE_SOURCE_DIR}/../libpng/source")
 target_link_libraries(LIBPNG::LIBPNG INTERFACE ${LIBPNG_LOCATION})
 
+# openal
+#add_android_lib(OPENAL openal-soft libopenal.so "${CMAKE_SOURCE_DIR}/../openal-soft/source/include")
+
+# ogg
+#add_android_lib(LIBOGG libogg libogg.so "${CMAKE_SOURCE_DIR}/../source/sdl/include")
+
 # vorbis
 # ./build/libvorbis/intermediates/cmake/debug/obj/x86/libvorbis.so
-add_android_lib(LIBVORBIS libvorbis libvorbis.so "${CMAKE_SOURCE_DIR}/../source/sdl/include")
-add_android_lib(LIBVORBISFILE libvorbis libvorbisfile.so "${CMAKE_SOURCE_DIR}/../source/sdl/include")
+#add_android_lib(LIBVORBIS libvorbis libvorbis.so "${CMAKE_SOURCE_DIR}/../source/sdl/include")
+#add_android_lib(LIBVORBISFILE libvorbis libvorbisfile.so "${CMAKE_SOURCE_DIR}/../source/sdl/include")
 
 # Joysticks were causing trouble on android.
 add_definitions(-DSDL_JOYSTICK=0)
