@@ -1,5 +1,8 @@
 # ensure cmake features we need
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+
+include(../BuildHelper.cmake)
+
 project(build_wrapper)
 
 set(OUT_DIR "${CMAKE_SOURCE_DIR}/out/${ANDROID_ABI}-${CMAKE_BUILD_TYPE}/")
@@ -10,8 +13,13 @@ SET(ARCHIVE_OUTPUT_DIRECTORY "${OUT_DIR}")
 SET(EXECUTABLE_OUTPUT_PATH ${OUT_DIR})
 SET(LIBRARY_OUTPUT_PATH ${OUT_DIR})
 
-add_subdirectory(source)
+macro(create_fake_lib path)
+    if (NOT EXISTS ${path})
+        file(TOUCH ${path})
+    endif ()
+endmacro()
 
-function(create_symlink)
-    message("No")
-endfunction()
+create_fake_lib("${CMAKE_BINARY_DIR}/source/libpng16d.so")
+create_fake_lib("${CMAKE_BINARY_DIR}/source/libpng16.so")
+
+add_subdirectory(source)

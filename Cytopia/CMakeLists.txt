@@ -1,7 +1,14 @@
 # ensure cmake features we need
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/source/cmake" "${CMAKE_SOURCE_DIR}/source/cmake/find-modules")
+
 project(build_wrapper)
+
+include_directories(
+        ${CMAKE_SOURCE_DIR}/include
+        ${CMAKE_SOURCE_DIR}/source/external/header_only
+)
 
 ## Set some helper variables.
 #string(TOLOWER "${CMAKE_SYSTEM_NAME}" targetSystem)
@@ -24,65 +31,55 @@ find_library(zlib z)
 
 string(TOLOWER ${CMAKE_BUILD_TYPE} ANDROID_BUILD_DIR)
 
-##SDL2
+function(add_android_lib interface_name libname filename include_dir)
+    add_library(${interface_name} INTERFACE IMPORTED GLOBAL)
+
+    target_include_directories(${interface_name} INTERFACE ${include_dir})
+    target_link_libraries(
+            ${interface_name} INTERFACE
+            ${CMAKE_SOURCE_DIR}/../build/${libname}/intermediates/cmake/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/${filename}
+    )
+endfunction()
+
+# SDL2
 # build/SDL2/intermediates/cmake/debug/obj/x86/libSDL2.so
-set(DISTRIBUTION_DIR ${CMAKE_SOURCE_DIR}/../build/SDL2/intermediates/cmake/)
-set(SDL2_LOCATION ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libSDL2.so)
-add_library(SDL::SDL SHARED IMPORTED)
-set_target_properties(SDL::SDL PROPERTIES IMPORTED_LOCATION ${SDL2_LOCATION})
-
-## SDL2_image
-set(SDL2_IMAGE_LOCATION ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libSDL2_image.so)
-add_library(SDL::SDL_image SHARED IMPORTED)
-set_target_properties(SDL::SDL_image PROPERTIES IMPORTED_LOCATION ${SDL2_IMAGE_LOCATION})
-
-## SDL2_ttf
-set(SDL2_TTF_LOCATION ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libSDL2_ttf.so)
-add_library(SDL::TTF SHARED IMPORTED)
-set_target_properties(SDL::TTF PROPERTIES IMPORTED_LOCATION ${SDL2_TTF_LOCATION})
+add_android_lib(SDL::SDL SDL2 libSDL2.so "${CMAKE_SOURCE_DIR}/../SDL2/source/sdl/include")
+add_android_lib(SDL::SDL_image SDL2 libSDL2_image.so "${CMAKE_SOURCE_DIR}/../SDL2/source/sdl_image")
+add_android_lib(SDL::TTF SDL2 libSDL2_ttf.so "${CMAKE_SOURCE_DIR}/../SDL2/source/sdl_ttf")
 
 # libnoise
 # build/libnoise/intermediates/cmake/release/obj/x86/libnoise.so
-set(NOISE_DISTRIBUTION_DIR ${CMAKE_SOURCE_DIR}/../build/libnoise/intermediates/cmake/)
-set(LIBNOISE_LOCATION ${NOISE_DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libnoise.so)
-add_library(LibNoise::LibNoise SHARED IMPORTED)
-set_target_properties(LibNoise::LibNoise PROPERTIES IMPORTED_LOCATION ${LIBNOISE_LOCATION})
+add_android_lib(LibNoise::LibNoise libnoise libnoise.so "${CMAKE_SOURCE_DIR}/../libnoise/source/src/noise")
 
 # openal
-set(OPENAL_DISTRIBUTION_DIR ${CMAKE_SOURCE_DIR}/platforms/android/build/openal-soft/intermediates/cmake)
-set(OPENAL_LOCATION ${OPENAL_DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libopenal.so)
-add_library(OPENAL SHARED IMPORTED)
-set_target_properties(OPENAL PROPERTIES IMPORTED_LOCATION ${OPENAL_LOCATION})
+add_android_lib(OPENAL openal-soft libopenal.so "${CMAKE_SOURCE_DIR}/../openal-soft/source/include")
 
 # ogg
-set(LIBOGG_DISTRIBUTION_DIR ${CMAKE_SOURCE_DIR}/platforms/android/build/libogg/intermediates/cmake)
-set(LIBOGG_LOCATION ${LIBOGG_DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libogg.so)
-add_library(LIBOGG SHARED IMPORTED)
-set_target_properties(LIBOGG PROPERTIES IMPORTED_LOCATION ${LIBOGG_LOCATION})
+add_android_lib(LIBOGG libogg libogg.so "${CMAKE_SOURCE_DIR}/../source/sdl/include")
 
 # zlib
 # build/zlib/intermediates/cmake/release/obj/x86/libz.so
-set(ZLIB_DISTRIBUTION_DIR ${CMAKE_SOURCE_DIR}/../build/zlib/intermediates/cmake/)
-set(ZLIB_LOCATION ${ZLIB_DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libz.so)
-add_library(ZLIB::ZLIB SHARED IMPORTED)
-set_target_properties(ZLIB::ZLIB PROPERTIES IMPORTED_LOCATION ${ZLIB_LOCATION})
+add_android_lib(ZLIB::ZLIB zlib libz.so "${CMAKE_SOURCE_DIR}/../zlib/source")
 
 # libpng
-# ./build/libpng/intermediates/cmake/debug/obj/x86/libpng.so
-set(LIBPNG_DISTRIBUTION_DIR ${CMAKE_SOURCE_DIR}/platforms/android/build/libpng/intermediates/cmake)
-set(LIBPNG_LOCATION ${LIBPNG_DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libpng.so)
-add_library(LIBPNG::LIBPNG SHARED IMPORTED)
-set_target_properties(LIBPNG::LIBPNG PROPERTIES IMPORTED_LOCATION ${LIBPNG_LOCATION})
+# build/libpng/intermediates/cmake/debug/obj/x86/libpng.so
+# build/libpng/intermediates/cmake/debug/obj/arm64-v8a/libpng16d.so
+set(LIBPNG_DISTRIBUTION_DIR ${CMAKE_SOURCE_DIR}/../build/libpng/intermediates/cmake/)
+if (CMAKE_BUILD_TYPE EQUAL "DEBUG")
+    set(LIBPNG_LOCATION ${LIBPNG_DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libpng16.so)
+else ()
+    set(LIBPNG_LOCATION ${LIBPNG_DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libpng16d.so)
+endif ()
+add_library(LIBPNG::LIBPNG INTERFACE IMPORTED GLOBAL)
+target_include_directories(LIBPNG::LIBPNG INTERFACE "${CMAKE_SOURCE_DIR}/../libpng/source")
+target_link_libraries(LIBPNG::LIBPNG INTERFACE ${LIBPNG_LOCATION})
 
 # vorbis
 # ./build/libvorbis/intermediates/cmake/debug/obj/x86/libvorbis.so
-set(LIBVORBIS_DISTRIBUTION_DIR ${CMAKE_SOURCE_DIR}/platforms/android/build/libvorbis/intermediates/cmake)
-set(LIBVORBIS_LOCATION ${LIBVORBIS_DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libvorbis.so)
-add_library(LIBVORBIS SHARED IMPORTED)
-set_target_properties(LIBVORBIS PROPERTIES IMPORTED_LOCATION ${LIBVORBIS_LOCATION})
+add_android_lib(LIBVORBIS libvorbis libvorbis.so "${CMAKE_SOURCE_DIR}/../source/sdl/include")
+add_android_lib(LIBVORBISFILE libvorbis libvorbisfile.so "${CMAKE_SOURCE_DIR}/../source/sdl/include")
 
-set(LIBVORBISFILE_LOCATION ${LIBVORBIS_DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/${ANDROID_ABI}/libvorbisfile.so)
-add_library(LIBVORBISFILE SHARED IMPORTED)
-set_target_properties(LIBVORBISFILE PROPERTIES IMPORTED_LOCATION ${LIBVORBISFILE_LOCATION})
 # Joysticks were causing trouble on android.
 add_definitions(-DSDL_JOYSTICK=0)
+
+add_subdirectory(source)
