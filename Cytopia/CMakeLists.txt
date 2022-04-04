@@ -4,14 +4,10 @@ include(FetchContent)
 
 project(build_wrapper)
 
-set(OUT_DIR "${CMAKE_SOURCE_DIR}/out/${CMAKE_ANDROID_ARCH_ABI}")
+set(OUT_DIR "${CMAKE_SOURCE_DIR}/out")
 
 SET(RUNTIME_OUTPUT_DIRECTORY "${OUT_DIR}")
 SET(LIBRARY_OUTPUT_DIRECTORY "${OUT_DIR}")
 SET(ARCHIVE_OUTPUT_DIRECTORY "${OUT_DIR}")
 SET(EXECUTABLE_OUTPUT_PATH ${OUT_DIR})
 SET(LIBRARY_OUTPUT_PATH ${OUT_DIR})
-
-add_subdirectory(source/sdl)
-add_subdirectory(source/sdl_image)
-add_subdirectory(source/sdl_ttf)
